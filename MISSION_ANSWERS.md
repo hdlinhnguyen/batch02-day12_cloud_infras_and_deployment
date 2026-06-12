@@ -72,8 +72,8 @@
 ## Part 3: Cloud Deployment
 
 ### Exercise 3.1: Railway deployment
-- **URL:** `https://your-agent.railway.app` (Placeholder - deployment mock details included in DEPLOYMENT.md)
-- **Screenshot:** [Link to screenshot in repo](screenshots/dashboard.png)
+- **URL:** `https://batch02-day12cloudinfrasanddeployment-production-39ce.up.railway.app`
+- **Screenshot:** [Link to screenshot in repo](screenshots/dashboard_railway.png)
 
 ### Exercise 3.2: Railway.toml vs Render.yaml
 - **`railway.toml`:** A service-specific config file focused solely on the build and run execution parameters (such as `startCommand`, `healthcheckPath`, and restart policies) of the current service. It does not define infrastructure resources (databases, redis clusters, other services).
