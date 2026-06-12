@@ -2,9 +2,12 @@ import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 
-client = TestClient(app)
+@pytest.fixture
+def client():
+    with TestClient(app) as c:
+        yield c
 
-def test_health_check():
+def test_health_check(client):
     response = client.get("/health")
     assert response.status_code == 200
     data = response.json()
@@ -12,14 +15,14 @@ def test_health_check():
     assert "uptime_seconds" in data
     assert "version" in data
 
-def test_ready_check():
+def test_ready_check(client):
     # Since Redis is not running during local unit test, it will fall back to in-memory mode
     response = client.get("/ready")
     assert response.status_code == 200
     data = response.json()
     assert data["ready"] is True
 
-def test_ask_endpoint_unauthorized():
+def test_ask_endpoint_unauthorized(client):
     # Request without X-API-Key header should return 401
     response = client.post(
         "/ask",
@@ -28,7 +31,7 @@ def test_ask_endpoint_unauthorized():
     assert response.status_code == 401
     assert "detail" in response.json()
 
-def test_ask_endpoint_forbidden():
+def test_ask_endpoint_forbidden(client):
     # Request with invalid X-API-Key header should return 403
     response = client.post(
         "/ask",
@@ -38,7 +41,7 @@ def test_ask_endpoint_forbidden():
     assert response.status_code == 403
     assert response.json()["detail"] == "Invalid API key."
 
-def test_ask_endpoint_success():
+def test_ask_endpoint_success(client):
     # Request with correct API Key (default is "demo-key-change-in-production")
     response = client.post(
         "/ask",
@@ -53,3 +56,4 @@ def test_ask_endpoint_success():
     assert "usage" in data
     assert data["usage"]["rate_limit_remaining"] == 9
     assert data["usage"]["monthly_cost_usd"] > 0
+

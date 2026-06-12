@@ -79,7 +79,6 @@ def validate_and_normalize_args(tool_name: str, args: dict[str, Any]) -> tuple[b
 
     Returns (ok, normalized_args, error_message).
     """
-    global _DECL_CACHE
     if _DECL_CACHE is None:
         _load_declarations()
     decl = _DECL_CACHE.get(tool_name) if _DECL_CACHE else None
