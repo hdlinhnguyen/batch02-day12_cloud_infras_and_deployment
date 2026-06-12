@@ -1,7 +1,7 @@
 # Day 12 Lab - Mission Answers
 
 > **Student Name:** Nguyen Ho Dieu Linh  
-> **Student ID:** AICB-P1-Student  
+> **Student ID:** 2A202600567  
 > **Date:** 2026-06-12  
 
 ---

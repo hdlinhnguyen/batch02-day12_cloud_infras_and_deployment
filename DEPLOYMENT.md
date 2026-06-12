@@ -1,8 +1,8 @@
 # Deployment Information
 
 ## Public URL
-- **Staging URL:** `https://your-agent.railway.app`
-- **Platform:** Railway / Render
+- **Staging URL:** `https://batch02-day12cloudinfrasanddeployment-production-39ce.up.railway.app`
+- **Platform:** Railway
 
 ---
 
@@ -123,7 +123,7 @@ A secondary frontend service has been deployed in the same Railway project to ex
 ---
 
 ## Screenshots (Refer to screenshots/ folder)
-- [Staging Dashboard](screenshots/dashboard.png) - View deployed services and Redis database on the cloud panel.
-- [Service Running Logs](screenshots/running.png) - App startup logs showing successful connection to Redis and local servers up.
-- [Endpoint Validation Tests](screenshots/test.png) - Terminal logs of liveness, auth checks, rate limiting, and cost guard outputs.
+- [Staging Dashboard](screenshots/dashboard_railway.png) - View deployed services and Redis database on the cloud panel.
+- [Service running](screenshots/Deploy_Railway.png) - Service build and running status on Railway.
+- [CI/CD Workflow Proof](screenshots/CICD proof_screenshot.png) - GitHub Actions CI/CD run and unit test execution logs.
 
