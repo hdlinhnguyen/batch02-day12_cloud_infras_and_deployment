@@ -1,0 +1,14 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+runs/
+transcripts/
+arxiv_papers/
+.DS_Store
+*.db
+*.sqlite

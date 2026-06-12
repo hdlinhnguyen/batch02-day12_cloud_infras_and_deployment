@@ -1,0 +1,72 @@
+version: "3.9"
+
+services:
+  # ──────────────────────────────────────
+  # Replicated Stateless FastAPI Agents
+  # ──────────────────────────────────────
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - ENVIRONMENT=production
+      - PORT=8000
+      - AGENT_API_KEY=my-secret-key
+      # Model Provider Configuration
+      - PROVIDER_NAME=openrouter
+      - MODEL_NAME=openai/gpt-4o-mini
+      - RATE_LIMIT_PER_MINUTE=10
+      - MONTHLY_BUDGET_USD=10.0
+      # Day 04 Model credentials
+      - OPENROUTER_API_KEY
+      - TAVILY_API_KEY
+      - FIRECRAWL_API_KEY
+      - RAPIDAPI_KEY
+      - RAPIDAPI_TWITTER_HOST
+      - ARXIV_USER_AGENT
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - agent_net
+    deploy:
+      replicas: 3
+
+  # ──────────────────────────────────────
+  # Redis - Session store & Rate limiting
+  # ──────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    command: redis-server --maxmemory 128mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    networks:
+      - agent_net
+
+  # ──────────────────────────────────────
+  # Nginx - Load Balancer Proxy
+  # ──────────────────────────────────────
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - agent
+    networks:
+      - agent_net
+
+networks:
+  agent_net:
+    driver: bridge

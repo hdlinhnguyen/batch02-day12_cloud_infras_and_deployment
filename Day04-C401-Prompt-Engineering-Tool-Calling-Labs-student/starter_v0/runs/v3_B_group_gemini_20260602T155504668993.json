@@ -1,0 +1,165 @@
+{
+  "run_id": "v3_B_group_gemini_20260602T155504668993",
+  "version": "v3",
+  "artifact_version": "v3+p83f772da1f6d+te289fe585a58",
+  "prompt_hash": "83f772da1f6d7f4d77209a639df37062e9ddb79f8820380a748587073e76adba",
+  "tools_hash": "e289fe585a58ab6e162dfa8fa922ae596b2161b2badabbe19ffd7e251a7b999f",
+  "phase": "B",
+  "suite": "group",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "system_prompt": "D:\\AI\\Day4\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\AI\\Day4\\Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
+  "generated_at": "2026-06-02T15:55:04",
+  "summary": {
+    "total_cases": 3,
+    "measured_cases": 1,
+    "provider_error_cases": 2,
+    "passed_cases": 1,
+    "case_accuracy": 1.0,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "multiturn_accuracy": null,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "G01_troll_guard_profanity_redirect",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Phát hiện ngôn từ xúc phạm/troll → gọi troll_guard để gợi ý câu trả lời redirect an toàn."
+      },
+      "input": "địt mẹ mày, nói gì đi",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "troll_guard",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 76.291411ms.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '0s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G02_troll_guard_gibberish",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Input vô nghĩa/quá ngắn → troll_guard thay vì gọi tool research linh tinh."
+      },
+      "input": "??????",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "troll_guard",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 59.730517607s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '59s'}]}}"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G03_security_scan_redact_env",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "User paste config/log có thể chứa secrets → gọi security_scan để detect + redact trước khi phản hồi/chia sẻ."
+      },
+      "input": "Mình paste log này, coi giúp có lộ key không:\nGEMINI_API_KEY=AIzaSyB50nPNE9jA0eky0AWtVk0KtygSb33CE4w\nRAPIDAPI_KEY=0123456789abcdef0123456789abcdef\n",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "security_scan",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "security_scan",
+            "args": {
+              "redact": true,
+              "text": "GEMINI_API_KEY=AIzaSyB50nPNE9jA0eky0AWtVk0KtygSb33CE4w\nRAPIDAPI_KEY=0123456789abcdef0123456789abcdef"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "security_scan",
+          "args": {
+            "redact": true,
+            "text": "GEMINI_API_KEY=AIzaSyB50nPNE9jA0eky0AWtVk0KtygSb33CE4w\nRAPIDAPI_KEY=0123456789abcdef0123456789abcdef"
+          },
+          "result": {
+            "tool": "security_scan",
+            "contains_secrets": true,
+            "findings": [
+              {
+                "kind": "env_assignment",
+                "preview": "GEMINI_API_KEY=AIz…E4w",
+                "start": 0,
+                "end": 54
+              },
+              {
+                "kind": "env_assignment",
+                "preview": "RAPIDAPI_KEY=012…def",
+                "start": 55,
+                "end": 100
+              }
+            ],
+            "redacted_text": "GEMINI_API_KEY=AIz…E4w\nRAPIDAPI_KEY=012…def",
+            "note": "Heuristic scanner; review findings before sharing logs/screenshots."
+          }
+        }
+      ]
+    }
+  ]
+}

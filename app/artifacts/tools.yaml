@@ -1,0 +1,253 @@
+tools:
+  # ==============================
+  # Information Gathering
+  # ==============================
+
+  - name: lookup
+    description: |
+      Search the public web for information, articles, reports, and news.
+      Use this as the default tool when the user asks about facts, events,
+      companies, people, products, or current affairs.
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Search query
+        topic:
+          type: string
+          enum: [general, news]
+          default: general
+        timeframe:
+          type: string
+          description: Optional time range (day/week/month/year). Omit this field if not needed.
+          enum: [day, week, month, year]
+          default: week
+        max_results:
+          type: integer
+          default: 5
+      required: [query]
+
+  - name: fetch
+    description: |
+      Read and extract content from a specific URL.
+      Use only after a URL has been provided by the user
+      or discovered through search results.
+    parameters:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL to read
+      required: [url]
+
+  # ==============================
+  # Social Media Research
+  # ==============================
+
+  - name: social_search
+    description: |
+      Search public social media posts.
+      Use when the user asks about tweets, posts,
+      discussions, reactions, trends, or public sentiment.
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+        search_type:
+          type: string
+          enum: [Latest, Top]
+          default: Top
+        limit:
+          type: integer
+          default: 5
+      required: [query]
+
+  - name: timeline
+    description: |
+      Retrieve recent posts from a specific social media account.
+      Prefer a real handle (e.g. sama, elonmusk). If the user only provides a name,
+      ask for clarification unless the handle is well-known and low-risk.
+    parameters:
+      type: object
+      properties:
+        screenname:
+          type: string
+        limit:
+          type: integer
+          default: 5
+      required: [screenname]
+
+  # ==============================
+  # Research Papers
+  # ==============================
+
+  - name: papers
+    description: |
+      Search academic papers from research repositories.
+      Use when the user requests scientific evidence,
+      academic references, literature reviews,
+      or state-of-the-art research.
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+        max_results:
+          type: integer
+          default: 5
+        sort_by:
+          type: string
+          enum:
+            - relevance
+            - lastUpdatedDate
+            - submittedDate
+          default: relevance
+      required: [query]
+
+  - name: paper_text
+    description: |
+      Retrieve text content from a research paper.
+      Use only after an arXiv URL or identifier is known.
+    parameters:
+      type: object
+      properties:
+        arxiv_url:
+          type: string
+        max_pages:
+          type: integer
+          default: 5
+        max_chars:
+          type: integer
+          default: 8000
+      required: [arxiv_url]
+
+  # ==============================
+  # Internal Policy
+  # ==============================
+
+  - name: policy
+    description: |
+      Search internal policies and operating instructions.
+      Use when the user asks about compliance,
+      publishing rules, citations, privacy,
+      tool usage, or research workflow.
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+        policy_area:
+          type: string
+          enum:
+            - all
+            - ai_research
+            - source_citation
+            - data_privacy
+            - external_publishing
+            - tool_usage
+          default: all
+        top_k:
+          type: integer
+          default: 3
+      required: [query]
+
+  # ==============================
+  # User Interaction
+  # ==============================
+
+  - name: clarify
+    description: |
+      Ask the user for missing information only when
+      the task cannot be completed safely or accurately
+      with reasonable assumptions.
+      Avoid unnecessary questions.
+    parameters:
+      type: object
+      properties:
+        question:
+          type: string
+        response_type:
+          type: string
+          enum: [text, yes_no, choice]
+          default: text
+        options:
+          type: array
+          items:
+            type: string
+      required: [question]
+
+  # ==============================
+  # Outbound Actions
+  # ==============================
+
+  - name: send
+    description: |
+      Send or publish content.
+      This tool must only be used after the user
+      has explicitly approved the exact content.
+      Never use this tool based on assumptions.
+    parameters:
+      type: object
+      properties:
+        text:
+          type: string
+        confirmed:
+          type: boolean
+          description: Must be true before execution
+      required: [text, confirmed]
+
+  # ==============================
+  # Safety / Troll guard
+  # ==============================
+
+  - name: troll_guard
+    description: |
+      Detect troll / abusive / spam / gibberish / impossible requests.
+      Use when the user input is low-quality or seems intended to derail the conversation.
+      Returns a suggested safe redirection response instead of taking action.
+    parameters:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The user message to classify.
+        mode:
+          type: string
+          enum: [polite, firm, playful]
+          default: polite
+      required: [text]
+
+  - name: security_scan
+    description: |
+      Detect and redact sensitive information (API keys/tokens) from text before sharing.
+      Use when the user pastes logs/configs or asks to publish/send content that may contain secrets.
+    parameters:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Text to scan (logs, snippets, messages).
+        redact:
+          type: boolean
+          description: If true, return redacted_text with secrets masked.
+          default: true
+        max_findings:
+          type: integer
+          description: Limit number of findings returned.
+          default: 25
+      required: [text]
+
+  # ---------------- Karpathy guidelines tool ----------------
+  - name: karpathy_guidelines
+    description: "Trả về danh sách nguyên tắc lập trình theo Karpathy (Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution)."
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+          default: ""
+          description: "Từ khóa lọc (ví dụ: checklist, principles)"
+      required: []
+
