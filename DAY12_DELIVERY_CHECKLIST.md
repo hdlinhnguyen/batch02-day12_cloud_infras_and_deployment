@@ -12,7 +12,7 @@ Submit a **GitHub repository** containing:
 
 ### 1. Mission Answers (40 points)
 
-Create a file `MISSION_ANSWERS.md` with your answers to all exercises:
+Create a file `Report.md` with your answers to all exercises:
 
 ````markdown
 # Day 12 Lab - Mission Answers
@@ -307,7 +307,7 @@ A secondary frontend service has been deployed in the same Railway project to ex
 ##  Pre-Submission Checklist
 
 - [x] Repository is public (or instructor has access)
-- [x] `MISSION_ANSWERS.md` completed with all exercises
+- [x] `Report.md` completed with all exercises
 - [x] `DEPLOYMENT.md` has working public URL
 - [x] All source code in `app/` directory
 - [x] `README.md` has clear setup instructions
