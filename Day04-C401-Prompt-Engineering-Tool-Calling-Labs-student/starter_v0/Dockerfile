@@ -31,4 +31,4 @@ COPY . .
 EXPOSE 8501
 
 # Run the Streamlit app by default
-CMD ["streamlit", "run", "app.py"]
+CMD ["sh", "-c", "streamlit run app.py --server.port $PORT --server.address 0.0.0.0"]

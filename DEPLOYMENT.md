@@ -104,9 +104,26 @@ Railway will automatically detect the root `Dockerfile` and perform a multi-stag
 railway logs
 ```
 
+### 5. Streamlit Web Interface Deployment (Day 04 Research Agent)
+A secondary frontend service has been deployed in the same Railway project to expose the interactive Streamlit user interface:
+- **Service Name:** `day04-web`
+- **Root Directory:** `Day04-C401-Prompt-Engineering-Tool-Calling-Labs-student/starter_v0`
+- **Public URL:** `https://day04-web-production.up.railway.app`
+- **Environment variables configured:**
+  ```bash
+  PORT=8501
+  OPENROUTER_API_KEY=sk-or-v1-xxxxxxxx...
+  TAVILY_API_KEY=tvly-dev-xxxxxxxx...
+  FIRECRAWL_API_KEY=fc-xxxxxxxx...
+  RAPIDAPI_KEY=xxxxxxxx...
+  RAPIDAPI_TWITTER_HOST=twitter-api45.p.rapidapi.com
+  ARXIV_USER_AGENT=AI20k-Day04-Research-Agent/1.0 (Table D1)
+  ```
+
 ---
 
 ## Screenshots (Refer to screenshots/ folder)
 - [Staging Dashboard](screenshots/dashboard.png) - View deployed services and Redis database on the cloud panel.
 - [Service Running Logs](screenshots/running.png) - App startup logs showing successful connection to Redis and local servers up.
 - [Endpoint Validation Tests](screenshots/test.png) - Terminal logs of liveness, auth checks, rate limiting, and cost guard outputs.
+
